@@ -1,0 +1,13 @@
+<h1>{{ title }}</h1>
+<p>Welcome to {{ title }}</p>
+<button class="{{ title }}" type="submit">Send</button>
+<input placeholder="{{title}} practice" />
+
+{% set node = "node.js" %}
+{% set js = "javascript" %}
+<p>{{node}} and {{js}}</p>
+
+{% set list = ['a', 'b', 'c'] %}
+{% for item in list %}
+<p>{{loop.index}} : {{item}}</p>
+{% endfor %}
