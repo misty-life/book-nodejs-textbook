@@ -27,6 +27,8 @@ const upload = multer({
 });
 
 dotenv.config();
+const indexRouter = require("./routes");
+const userRouter = require("./routes/user");
 const app = express();
 app.set("port", process.env.PORT || 3000);
 
@@ -52,18 +54,13 @@ app.use(session({ // for session
     },
     name: "session-cookie",
 }));
-app.use((req, res, next) => {
-    res.locals.data = "DATA";
-    next();
-}, (req, res, next) => {
-    console.log(res.locals.data);
-    next();
-});
-
-app.use((req, res, next) => {
-    console.log("This is called by every request");
-    next();
-});
+// app.use((req, res, next) => {
+//     res.locals.data = "DATA";
+//     next();
+// }, (req, res, next) => {
+//     console.log(res.locals.data);
+//     next();
+// });
 
 app.get("/upload", (req, res) => {
     res.sendFile(path.join(__dirname, "multipart.html"));
@@ -74,19 +71,26 @@ app.post("/upload", upload.single("image"), (req, res) => {
     res.send("ok");
 });
 
-app.get('/', (req, res, next) => {
-    console.log("This is called by only '/' request");
-    next();
-    // res.send("Hello, Express!");
-    // res.sendFile(path.join(__dirname, "/index.html"));
-}, (req, res) => {
-    throw new Error("This error will be delivered to Middle ware");
+app.use('/', indexRouter);
+app.use("/user", userRouter);
+
+app.use((req, res, next) => {
+    res.status(404).send("Not Found");
 });
 
-app.use((err, req, res, next) => {
-    console.error(err);
-    // res.status(500).send(err.message);
-});
+// app.get('/', (req, res, next) => {
+//     console.log("This is called by only '/' request");
+//     next();
+//     // res.send("Hello, Express!");
+//     // res.sendFile(path.join(__dirname, "/index.html"));
+// }, (req, res) => {
+//     throw new Error("This error will be delivered to Middle ware");
+// });
+
+// app.use((err, req, res, next) => {
+//     console.error(err);
+//     res.status(500).send(err.message);
+// });
 
 app.listen(app.get("port"), () => {
     console.log("START SERVER ON", app.get("port"));
