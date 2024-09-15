@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <form id="user-form">
+            <fieldset>
+                <legend>REGISTER USER</legend>
+                <div><input id="username" type="text" placeholder="name"></div>
+                <div><input id="age" type="number" placeholder="age"></div>
+                <div><input id="married" type="checkbox"><label for="married">isMarried</label></div>
+                <button type="submit">REGISTER</button>
+            </fieldset>
+        </form>
+    </div>
+
+    <table id="user-list">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>AGE</th>
+                <th>ISMARIED</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.age }}</td>
+                <td>{{ "기혼" if user.married else "미혼" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <div>
+        <form id="comment-form">
+            <fieldset>
+                <legend>REGISTER COMMENT</legend>
+                <div><input type="text" placeholder="User ID" id="userId"></div>
+                <div><input type="text" placeholder="COMMENT" id="comment"></div>
+                <button type="submit">REGISTER</button>
+            </fieldset>
+        </form>
+    </div>
+
+    <br>
+
+    <table id="comment-list">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>AUTHOR</th>
+                <th>COMMENT</th>
+                <th>UPDATE</th>
+                <th>DELETE</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/sequelize.js"></script>
+</body>
+</html>
